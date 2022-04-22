@@ -30,13 +30,28 @@ The Braze and Amperity integration offers a unified view of your customers acros
 
 ## Integration
 
-### Step 1: Create an Amperity user segment
+### Step 1: Create an Amperity user list
 
-To upload Amperity user data to Braze, you must first create a segment of existing Amperity users.
-1. Navigate to the **Segments** tab within the Amperity dashboard.<br>![][2]<br><br>
-2. Click **Create** to filter and define a segment of users to capture. Under the **Summary** tab, you can view valuable insights like historical revenue and predicted revenue for the coming year based on the given user segment. <br>![A summary of an Amperity segment showing the revenue and reachability stats.][3] <br><br>
-3. Select the **Customers** tab, and choose which user fields you would like to include using the **Show Columns** selector.<br>![The Amperity segment builder showing the available customer attributes to include.][4]<br><br>
-4. Next, click **Run Segment**.
+To upload Amperity user data to Braze, you must configure a destination to send query results to Braze, create a query that returns a list of users, and then send the results of that query to Braze using an orchestration.
+
+1. Add a [Braze destination](https://docs.amperity.com/datagrid/destination_braze.html) for your tenant.
+2. Navigate to the **Queries** tab within the Amperity dashboard.<br>![][2]<br><br>
+3. Click **Create**, and then select **SQL Query** to define a SQL query that returns a list of users. For example:
+
+   ```
+   SELECT
+     amperity_id
+     ,external_id AS external_id
+     ,email AS email
+     ,given_name AS first_name
+     ,surname AS last_name
+     -- add more attributes, as desired
+   FROM Merged_Customers
+   ```
+4. Click **Run** to validate your query. When finished, click **Activate**. <br>![A summary of an Amperity segment showing the revenue and reachability stats.][3] <br><br>
+5. Add this query to an orchestration that is configured to [send lists of Amperity users to Braze](https://docs.amperity.com/amp360/sendto_braze.html).<br>![The Amperity segment builder showing the available customer attributes to include.][4]<br><br>.
+
+
 
 ### Step 2: Select upload method
 
